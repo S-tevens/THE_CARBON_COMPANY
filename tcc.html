@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Carbon Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(30, 64, 175, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #6366f1 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="150" cy="150" r="4" fill="rgba(255,255,255,0.25)"/><circle cx="800" cy="200" r="6" fill="rgba(255,255,255,0.2)"/><circle cx="300" cy="500" r="3" fill="rgba(255,255,255,0.3)"/><circle cx="700" cy="650" r="5" fill="rgba(255,255,255,0.15)"/><circle cx="450" cy="300" r="2" fill="rgba(255,255,255,0.35)"/><circle cx="600" cy="450" r="4" fill="rgba(255,255,255,0.25)"/><circle cx="100" cy="700" r="3" fill="rgba(255,255,255,0.2)"/><circle cx="850" cy="800" r="7" fill="rgba(255,255,255,0.18)"/><circle cx="250" cy="800" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="950" cy="400" r="5" fill="rgba(255,255,255,0.22)"/></svg>');
+            animation: float 25s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 strong {
+            font-weight: 700;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1e40af;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Why We Exist Section */
+        .why-section {
+            padding: 6rem 0;
+            background: #f8fafc;
+            position: relative;
+        }
+
+        .why-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .why-text h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #1e40af;
+            margin-bottom: 2rem;
+        }
+
+        .why-text p {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .initiative h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #1e40af;
+            margin-bottom: 2rem;
+        }
+
+        .initiative-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .initiative-icon {
+            width: 40px;
+            height: 40px;
+            background: #1e40af;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .farmer-image {
+            width: 100%;
+            height: 400px;
+            background: url('https://dialogue.earth/content/uploads/2023/09/20230417_agroforestry-soil_NazarePaulista_SP_Brazil_LucasNinno_DialogoChino.jpg') center/cover;
+            border-radius: 10px;
+        }
+
+        
+
+        .farmer-image-ourimpact {
+            width: 100%;
+            height: 400px;
+            background: url('https://images.stockcake.com/public/4/3/3/4330e006-18db-4cf3-a9f9-841b075f890f/life-below-ground-stockcake.jpg') center/cover;
+            border-radius: 10px;
+        }
+
+        .farmer-image-whywewexist {
+            width: 100%;
+            height: 400px;
+            background: url('https://images.pexels.com/photos/5806539/pexels-photo-5806539.jpeg') center/cover;
+            border-radius: 10px;
+        }
+        /* Goals Section with Parallax */
+        .goals {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #1e40af 0%, #6366f1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goals-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .goals-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .goals h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 4rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .fact-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .fact-box p {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* About Us Page */
+        .about-hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            padding: 6rem 0 4rem;
+            color: white;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .content-text h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1e40af;
+            margin-bottom: 2rem;
+        }
+
+        .content-text p {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        /* Vision Page */
+        .vision-section {
+            padding: 4rem 0;
+            background: #f8fafc;
+        }
+
+        .vision-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .vision-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .vision-card h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Page */
+        .projects-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* .project-image {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);
+            background: url('https://images.stockcake.com/public/4/3/3/4330e006-18db-4cf3-a9f9-841b075f890f/life-below-ground-stockcake.jpg') center/cover;
+        } 
+
+        */
+
+        .project-image-erwp {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
+            background: url('https://images.stockcake.com/public/4/3/3/4330e006-18db-4cf3-a9f9-841b075f890f/life-below-ground-stockcake.jpg') center/cover;
+        }
+
+        .project-image-wcd {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
+            background: url('https://images.pexels.com/photos/5830994/pexels-photo-5830994.jpeg') center/cover;
+        }
+
+        .project-image-fti {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
+            background: url('https://annualreport2021.cimmyt.org/wp-content/uploads/sites/80/2022/08/CIMMYT.18.07.01.0017.ETH_.GM_.jpg') center/cover;
+        }
+
+        .project-image-cmn {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
+            background: url('https://ars.els-cdn.com/content/image/1-s2.0-S0264837704000122-gr5.jpg') center/cover;
+        }
+
+        .project-image-rp {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
+            background: url('https://images.pexels.com/photos/4963437/pexels-photo-4963437.jpeg?cs=srgb&dl=pexels-ketut-subiyanto-4963437.jpg&fm=jpg') center/cover;
+        }
+
+        .project-image-cd {
+            height: 200px;
+           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
+            background: url('https://upload.wikimedia.org/wikipedia/commons/3/3f/Colorful_meeting_for_farm_development_._walawal_village_women_farmer_group_maharashtra_20_aug_2021.jpg') center/cover;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        /* Connect Page */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .why-content,
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .vision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">THE CARBON COMPANY</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')">HOME</a></li>
+                <li><a href="#" onclick="showPage('projects')">PROJECTS</a></li>
+                <li><a href="#" onclick="showPage('about')">ABOUT US</a></li>
+                <li><a href="#" onclick="showPage('connect')">CONNECT</a></li>
+                <li><a href="#" onclick="showPage('vision')">VISION</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1>We turn<br>Soil into<br><strong>Carbon<br>Sink.</strong></h1>
+                <p class="hero-description">
+                    The Carbon Company builds climate infrastructure rooted in science and land 
+                    restoring degraded soils through Enhanced Rock Weathering and 
+                    deeptech partnerships across South Asia.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showPage('connect')">PARTNER WITH US</a>
+                    <a href="#" class="btn btn-secondary" onclick="showPage('projects')">EXPLORE</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why We Exist Section -->
+        <section class="why-section">
+            <div class="why-content">
+                <div class="why-text">
+                    <h2>why we<br>exist?</h2>
+                    <p>Carbon Company is building a future where degraded lands become climate solutions. Through technology-driven carbon dioxide removal CDR pathways like Enhanced Rock Weathering, we're enabling scalable, and locally rooted carbon removal - with farmers, scientists, and land stewards across the Global South.</p>
+                    
+                    <div class="initiative">
+                        <h3>The Initiative.</h3>
+                        <div class="initiative-item">
+                            <div class="initiative-icon"></div>
+                            <span><b>community integrated deployment.</b></span>
+                        </div>
+                        <div class="initiative-item">
+                            <div class="initiative-icon"></div>
+                            <span><b>WayCarbon</b>, a region rooted blend to help crops.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="farmer-image-whywewexist"></div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section class="goals">
+            <div class="goals-bg"></div>
+            <div class="goals-content">
+                <h2>the GOAL.</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number" data-target="10000">0</div>
+                        <div class="stat-label">farmers engaged</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="50000">0</div>
+                        <div class="stat-label">hectares revived</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-label">MT CO₂ BY 2030</div>
+                    </div>
+                </div>
+                <div class="fact-box">
+                    <p>According to the UN FAO, if current trends continue, 90% of topsoil could be degraded by 2050.</p>
+                    <p>It takes 100 to 1,000 years to form just 1 cm of topsoil naturally, but intensive agriculture can erode this amount in just one season.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Us Page -->
+    <div id="about" class="page">
+        <section class="about-hero">
+            <div class="goals-content">
+                <h1>About Us</h1>
+                <p>Pioneering sustainable soil restoration through science and community partnership</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <div class="content-grid">
+                <div class="content-text">
+                    <h2>Our Mission</h2>
+                    <p>The Carbon Company is dedicated to transforming degraded agricultural lands into thriving carbon sinks. We work directly with farmers across South Asia to implement Enhanced Rock Weathering technology that not only restores soil health but also removes atmospheric carbon dioxide.</p>
+                    <p>Our approach combines cutting-edge science with traditional farming wisdom, creating sustainable solutions that benefit both the environment and local communities.</p>
+                </div>
+                <div>
+                    <div class="farmer-image">
+<!--                         <img src="C:\Users\Stevens\Downloads\20230417_agroforestry-soil_NazarePaulista_SP_Brazil_LucasNinno_DialogoChino.jpg" alt="degraded soil">
+ -->                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" style="background: #f8fafc;">
+            <div class="content-grid">
+                <div>
+                    <div class="farmer-image-ourimpact"></div>
+                </div>
+                <div class="content-text">
+                    <h2>Our Impact</h2>
+                    <p>Through our innovative WayCarbon blend and community-centered approach, we're creating measurable environmental and social impact. Our technology helps restore soil fertility while sequestering carbon, providing farmers with improved crop yields and sustainable income.</p>
+                    <p>We believe that effective climate action must be rooted in local communities and driven by scientific innovation.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Vision Page -->
+    <div id="vision" class="page">
+        <section class="about-hero">
+            <div class="goals-content">
+                <h1>Our Vision</h1>
+                <p>Building a regenerative future through soil restoration and carbon sequestration</p>
+            </div>
+        </section>
+
+        <section class="vision-section">
+            <div class="vision-grid">
+                <div class="vision-card">
+                    <h3>Climate Resilience</h3>
+                    <p>Creating climate-resilient agricultural systems that can withstand environmental challenges while contributing to carbon removal from the atmosphere.</p>
+                </div>
+                <div class="vision-card">
+                    <h3>Farmer Empowerment</h3>
+                    <p>Empowering farmers with technology and knowledge to transform their land into productive, sustainable ecosystems that generate long-term value.</p>
+                </div>
+                <div class="vision-card">
+                    <h3>Scientific Innovation</h3>
+                    <p>Advancing Enhanced Rock Weathering and other carbon removal technologies through rigorous research and real-world application.</p>
+                </div>
+                <div class="vision-card">
+                    <h3>Global Impact</h3>
+                    <p>Scaling our solutions across the Global South to create meaningful impact on climate change while supporting local economic development.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects" class="page">
+        <section class="about-hero">
+           <!-- <div class="hero-bg"></div> -->
+            <div class="goals-content">
+                
+                <h1>Our Projects</h1>
+                <p>Transforming agricultural landscapes through innovative soil restoration initiatives</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image-erwp"></div>
+                    <div class="project-content">
+                        <h3>Enhanced Rock Weathering Program</h3>
+                        <p>Our flagship initiative deploying mineral-based soil amendments across 10,000+ hectares to enhance carbon sequestration and soil fertility.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-wcd"></div>
+                    <div class="project-content">
+                        <h3>WayCarbon Development</h3>
+                        <p>Creating region-specific carbon-enriched soil blends tailored to local crop needs and environmental conditions.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-fti"></div>
+                    <div class="project-content">
+                        <h3>Farmer Training Initiative</h3>
+                        <p>Comprehensive education and support programs for farmers transitioning to regenerative agricultural practices.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-cmn"></div>
+                    <div class="project-content">
+                        <h3>Carbon Monitoring Network</h3>
+                        <p>Advanced monitoring systems tracking carbon sequestration rates and soil health improvements across all project sites.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-rp"></div>
+                    <div class="project-content">
+                        <h3>Research Partnerships</h3>
+                        <p>Collaborations with leading agricultural research institutions to advance soil restoration technologies.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-cd"></div>
+                    <div class="project-content">
+                        <h3>Community Development</h3>
+                        <p>Supporting local communities with sustainable livelihood opportunities through our soil restoration programs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Connect Page -->
+    <div id="connect" class="page">
+        <div class="hero-bg"></div>
+        <section class="about-hero">
+            <div class="goals-content">
+                <h1>Connect With Us</h1>
+                <p>Partner with us to create lasting environmental and social impact</p>
+                <br>
+                <p>EMAIL: KALLOSXSOLUTIONS@GMAIL.COM</p>
+                <p>CONTACT: +91 7975139115</p>
+                <p>LOCATION: Bengaluru, Karnataka, India</p>
+                <br>
+                <p><em>OUR SERVICES: </em></p>
+                <p>fund high-integrity carbon removal and purchase verified credits that drive real climate impact.</p>
+                <p>If you’re a land owner who wants to improve crop yield, test soil and water, and use data to increase crop production</p>
+                <p></p>
+            </div>
+        </section>
+
+        <!-- <section class="content-section">
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="organization">Organization</label>
+                        <input type="text" id="organization" name="organization">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Area of Interest</label>
+                        <select id="interest" name="interest" style="width: 100%; padding: 1rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
+                            <option value="">Select an option</option>
+                            <option value="partnership">Partnership Opportunities</option>
+                            <option value="research">Research Collaboration</option>
+                            <option value="investment">Investment</option>
+                            <option value="farming">Farming Programs</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your interest in soil restoration and carbon sequestration..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </section> -->
+    </div>
+
+    <!-- <form id="contact-form" action="https://formspree.io/f/xblyyddj" method="POST">
+    // Your form fields here 
+    <input type="text" name="Name" required >
+    <input type="email" name="Email" required >
+    <textarea name="message" required></textarea>
+
+    <button id="submit-btn" type="submit">
+        <span class="btn-text">Send</span>
+        <span class="btn-loading" style="display: none;"></span>
+    </button>
+    </form> 
+    -->
+
+    <div id="form-status" style="display: none; margin-top: 1rem; padding: 0.5rem; border-radius: 4px;"></div>
+
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.querySelector('.hero-bg');
+            const goalsBackground = document.querySelector('.goals-bg');
+            
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+            
+            if (goalsBackground) {
+                goalsBackground.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Counting Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            const speed = 50; // Animation speed
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / speed;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (target >= 1000) {
+                            counter.textContent = Math.ceil(current).toLocaleString() + '+';
+                        } else {
+                            counter.textContent = Math.ceil(current) + 'MT';
+                        }
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        if (target >= 1000) {
+                            counter.textContent = target.toLocaleString() + '+';
+                        } else {
+                            counter.textContent = target + 'MT';
+                        }
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Intersection Observer for counting animation
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe the goals section
+        const goalsSection = document.querySelector('.goals');
+        if (goalsSection) {
+            observer.observe(goalsSection);
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+       /*  document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            const statusDiv = document.getElementById('form-status');
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
+            statusDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success
+                    statusDiv.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
+                    statusDiv.style.backgroundColor = '#d1fae5';
+                    statusDiv.style.color = '#065f46';
+                    statusDiv.style.border = '1px solid #a7f3d0';
+                    statusDiv.style.display = 'block';
+                    form.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Error
+                statusDiv.innerHTML = '❌ There was an error sending your message. Please try again or contact us directly.';
+                statusDiv.style.backgroundColor = '#fee2e2';
+                statusDiv.style.color = '#991b1b';
+                statusDiv.style.border = '1px solid #fca5a5';
+                statusDiv.style.display = 'block';
+            } finally {
+                // Reset button state
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        }); */
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Any initialization code can go here
+        });
+    </script>
+</body>
+</html>
