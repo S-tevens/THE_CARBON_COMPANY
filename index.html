@@ -65,6 +65,90 @@
             opacity: 0.7;
         }
 
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(30, 64, 175, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav-links li {
+            margin: 2rem 0;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: 300;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            font-weight: 300;
+        }
+
+        /* Hamburger Animation */
+        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
         /* Page Sections */
         .page {
             display: none;
@@ -226,8 +310,6 @@
             border-radius: 10px;
         }
 
-        
-
         .farmer-image-ourimpact {
             width: 100%;
             height: 400px;
@@ -241,6 +323,7 @@
             background: url('https://images.pexels.com/photos/5806539/pexels-photo-5806539.jpeg') center/cover;
             border-radius: 10px;
         }
+
         /* Goals Section with Parallax */
         .goals {
             padding: 6rem 0;
@@ -403,47 +486,33 @@
             transform: translateY(-5px);
         }
 
-        /* .project-image {
-            height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);
-            background: url('https://images.stockcake.com/public/4/3/3/4330e006-18db-4cf3-a9f9-841b075f890f/life-below-ground-stockcake.jpg') center/cover;
-        } 
-
-        */
-
         .project-image-erwp {
             height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
             background: url('https://images.stockcake.com/public/4/3/3/4330e006-18db-4cf3-a9f9-841b075f890f/life-below-ground-stockcake.jpg') center/cover;
         }
 
         .project-image-wcd {
             height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
             background: url('https://images.pexels.com/photos/5830994/pexels-photo-5830994.jpeg') center/cover;
         }
 
         .project-image-fti {
             height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
             background: url('https://annualreport2021.cimmyt.org/wp-content/uploads/sites/80/2022/08/CIMMYT.18.07.01.0017.ETH_.GM_.jpg') center/cover;
         }
 
         .project-image-cmn {
             height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
             background: url('https://ars.els-cdn.com/content/image/1-s2.0-S0264837704000122-gr5.jpg') center/cover;
         }
 
         .project-image-rp {
             height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
             background: url('https://images.pexels.com/photos/4963437/pexels-photo-4963437.jpeg?cs=srgb&dl=pexels-ketut-subiyanto-4963437.jpg&fm=jpg') center/cover;
         }
 
         .project-image-cd {
             height: 200px;
-           /*background: linear-gradient(45deg, #e2e8f0, #cbd5e1);*/
             background: url('https://upload.wikimedia.org/wikipedia/commons/3/3f/Colorful_meeting_for_farm_development_._walawal_village_women_farmer_group_maharashtra_20_aug_2021.jpg') center/cover;
         }
 
@@ -496,18 +565,39 @@
                 display: none;
             }
 
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
             }
 
             .why-content,
             .content-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .why-text h2 {
+                font-size: 2rem;
+            }
+
+            .goals h2 {
+                font-size: 2rem;
             }
 
             .stats {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
             }
 
             .vision-grid {
@@ -516,6 +606,56 @@
 
             .cta-buttons {
                 flex-direction: column;
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .content-text h2 {
+                font-size: 2rem;
+            }
+
+            .farmer-image,
+            .farmer-image-ourimpact,
+            .farmer-image-whywewexist {
+                height: 250px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fact-box {
+                padding: 1.5rem;
+            }
+
+            .fact-box p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .why-text h2,
+            .goals h2 {
+                font-size: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero-content,
+            .goals-content {
+                padding: 0 1rem;
             }
         }
     </style>
@@ -532,8 +672,25 @@
                 <li><a href="#" onclick="showPage('connect')">CONNECT</a></li>
                 <li><a href="#" onclick="showPage('vision')">VISION</a></li>
             </ul>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-close" onclick="toggleMobileMenu()">×</div>
+        <ul class="mobile-nav-links">
+            <li><a href="#" onclick="showPage('home'); toggleMobileMenu();">HOME</a></li>
+            <li><a href="#" onclick="showPage('projects'); toggleMobileMenu();">PROJECTS</a></li>
+            <li><a href="#" onclick="showPage('about'); toggleMobileMenu();">ABOUT US</a></li>
+            <li><a href="#" onclick="showPage('connect'); toggleMobileMenu();">CONNECT</a></li>
+            <li><a href="#" onclick="showPage('vision'); toggleMobileMenu();">VISION</a></li>
+        </ul>
+    </div>
 
     <!-- Home Page -->
     <div id="home" class="page active">
@@ -621,9 +778,7 @@
                     <p>Our approach combines cutting-edge science with traditional farming wisdom, creating sustainable solutions that benefit both the environment and local communities.</p>
                 </div>
                 <div>
-                    <div class="farmer-image">
-<!--                         <img src="C:\Users\Stevens\Downloads\20230417_agroforestry-soil_NazarePaulista_SP_Brazil_LucasNinno_DialogoChino.jpg" alt="degraded soil">
- -->                    </div>
+                    <div class="farmer-image"></div>
                 </div>
             </div>
         </section>
@@ -676,9 +831,7 @@
     <!-- Projects Page -->
     <div id="projects" class="page">
         <section class="about-hero">
-           <!-- <div class="hero-bg"></div> -->
             <div class="goals-content">
-                
                 <h1>Our Projects</h1>
                 <p>Transforming agricultural landscapes through innovative soil restoration initiatives</p>
             </div>
@@ -734,7 +887,6 @@
 
     <!-- Connect Page -->
     <div id="connect" class="page">
-        <div class="hero-bg"></div>
         <section class="about-hero">
             <div class="goals-content">
                 <h1>Connect With Us</h1>
@@ -746,64 +898,24 @@
                 <br>
                 <p><em>OUR SERVICES: </em></p>
                 <p>fund high-integrity carbon removal and purchase verified credits that drive real climate impact.</p>
-                <p>If you’re a land owner who wants to improve crop yield, test soil and water, and use data to increase crop production</p>
-                <p></p>
+                <p>If you're a land owner who wants to improve crop yield, test soil and water, and use data to increase crop production</p>
             </div>
         </section>
-
-        <!-- <section class="content-section">
-            <div class="contact-form">
-                <form>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="organization">Organization</label>
-                        <input type="text" id="organization" name="organization">
-                    </div>
-                    <div class="form-group">
-                        <label for="interest">Area of Interest</label>
-                        <select id="interest" name="interest" style="width: 100%; padding: 1rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem;">
-                            <option value="">Select an option</option>
-                            <option value="partnership">Partnership Opportunities</option>
-                            <option value="research">Research Collaboration</option>
-                            <option value="investment">Investment</option>
-                            <option value="farming">Farming Programs</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your interest in soil restoration and carbon sequestration..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
-                </form>
-            </div>
-        </section> -->
     </div>
 
-    <!-- <form id="contact-form" action="https://formspree.io/f/xblyyddj" method="POST">
-    // Your form fields here 
-    <input type="text" name="Name" required >
-    <input type="email" name="Email" required >
-    <textarea name="message" required></textarea>
-
-    <button id="submit-btn" type="submit">
-        <span class="btn-text">Send</span>
-        <span class="btn-loading" style="display: none;"></span>
-    </button>
-    </form> 
-    -->
-
-    <div id="form-status" style="display: none; margin-top: 1rem; padding: 0.5rem; border-radius: 4px;"></div>
-
-
     <script>
+        // Mobile Menu Toggle Function
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.mobile-menu-toggle');
+            
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            // Toggle body overflow to prevent scrolling when menu is open
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
         // Page Navigation
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
@@ -811,6 +923,9 @@
                 page.classList.remove('active');
             });
             document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top when changing pages
+            window.scrollTo(0, 0);
         }
 
         // Parallax Effect
@@ -880,72 +995,6 @@
         if (goalsSection) {
             observer.observe(goalsSection);
         }
-
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Form submission
-       /*  document.getElementById('contact-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const form = e.target;
-            const formData = new FormData(form);
-            const submitBtn = document.getElementById('submit-btn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const btnLoading = submitBtn.querySelector('.btn-loading');
-            const statusDiv = document.getElementById('form-status');
-            
-            // Show loading state
-            btnText.style.display = 'none';
-            btnLoading.style.display = 'inline';
-            submitBtn.disabled = true;
-            statusDiv.style.display = 'none';
-            
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                if (response.ok) {
-                    // Success
-                    statusDiv.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
-                    statusDiv.style.backgroundColor = '#d1fae5';
-                    statusDiv.style.color = '#065f46';
-                    statusDiv.style.border = '1px solid #a7f3d0';
-                    statusDiv.style.display = 'block';
-                    form.reset();
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                // Error
-                statusDiv.innerHTML = '❌ There was an error sending your message. Please try again or contact us directly.';
-                statusDiv.style.backgroundColor = '#fee2e2';
-                statusDiv.style.color = '#991b1b';
-                statusDiv.style.border = '1px solid #fca5a5';
-                statusDiv.style.display = 'block';
-            } finally {
-                // Reset button state
-                btnText.style.display = 'inline';
-                btnLoading.style.display = 'none';
-                submitBtn.disabled = false;
-            }
-        }); */
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
